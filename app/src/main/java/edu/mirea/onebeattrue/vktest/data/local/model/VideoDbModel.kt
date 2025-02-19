@@ -12,8 +12,5 @@ data class VideoDbModel(
     val author: String,
     val videoFile: String,
     val previewPicture: String,
-    val page: Int,
-    val perPage: Int,
-    val prevPage: String?,
-    val nextPage: String?
+    val page: Int
 )

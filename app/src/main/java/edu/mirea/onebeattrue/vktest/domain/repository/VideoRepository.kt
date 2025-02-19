@@ -1,9 +1,11 @@
 package edu.mirea.onebeattrue.vktest.domain.repository
 
-import androidx.paging.PagingData
 import edu.mirea.onebeattrue.vktest.domain.model.Video
 import kotlinx.coroutines.flow.Flow
 
 interface VideoRepository {
-    fun getVideos(): Flow<PagingData<Video>>
+    fun getVideos(): Flow<List<Video>>
+    suspend fun getVideoById(id: Long): Video
+    suspend fun loadNext(page: Int)
+    suspend fun refresh()
 }

@@ -17,7 +17,7 @@ object ApiFactory {
 
             val newRequest = originalRequest
                 .newBuilder()
-                .addHeader(HEADER_KEY, BuildConfig.API_KEY)
+                .header(HEADER_KEY, BuildConfig.API_KEY)
                 .build()
 
             chain.proceed(newRequest)

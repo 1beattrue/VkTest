@@ -10,4 +10,5 @@ data class Video(
     val author: String,
     val videoFile: String,
     val previewPicture: String,
+    val page: Int
 )

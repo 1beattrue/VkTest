@@ -8,7 +8,10 @@ interface VideoApiService {
 
     @GET("videos/popular")
     suspend fun getVideos(
-        @Query("page") page: Int,
-        @Query("per_page") pageCount: Int,
+        @Query(QUERY_PARAM_PAGE) page: Int
     ): VideoResponseDto
+
+    companion object {
+        private const val QUERY_PARAM_PAGE = "page"
+    }
 }
