@@ -6,5 +6,5 @@ import javax.inject.Inject
 data class LoadNextUseCase @Inject constructor(
     private val repository: VideoRepository,
 ) {
-    suspend operator fun invoke(page: Int) = repository.loadNext(page)
+    suspend operator fun invoke() = repository.loadNext()
 }

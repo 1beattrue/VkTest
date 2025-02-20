@@ -10,6 +10,7 @@ import dagger.assisted.AssistedInject
 import edu.mirea.onebeattrue.vktest.presentation.main.MainStore.Intent
 import edu.mirea.onebeattrue.vktest.presentation.utils.scope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
@@ -28,6 +29,8 @@ class DefaultMainComponent @AssistedInject constructor(
                     is MainStore.Label.OnVideoClicked -> {
                         onVideoClicked(label.videoId)
                     }
+
+                    else -> {}
                 }
             }
         }
@@ -37,8 +40,19 @@ class DefaultMainComponent @AssistedInject constructor(
     override val model: StateFlow<MainStore.State>
         get() = store.stateFlow
 
+    override val labels: Flow<MainStore.Label>
+        get() = store.labels
+
     override fun clickVideo(videoId: Long) {
         store.accept(Intent.ClickVideo(videoId))
+    }
+
+    override fun loadNext() {
+        store.accept(Intent.LoadNext)
+    }
+
+    override fun refresh() {
+        store.accept(Intent.Refresh)
     }
 
 

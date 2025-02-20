@@ -8,6 +8,8 @@ data class VideoDbModel(
     @PrimaryKey
     val id: Long,
     val thumbnail: String,
+    val width: Int,
+    val height: Int,
     val duration: Int,
     val author: String,
     val videoFile: String,

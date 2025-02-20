@@ -6,12 +6,14 @@ import retrofit2.http.Query
 
 interface VideoApiService {
 
-    @GET("videos/popular")
+    @GET("v1/videos/popular")
     suspend fun getVideos(
-        @Query(QUERY_PARAM_PAGE) page: Int
+        @Query(QUERY_PARAM_PAGE) page: Int,
+        @Query(QUERY_PARAM_PER_PAGE) count: Int,
     ): VideoResponseDto
 
     companion object {
         private const val QUERY_PARAM_PAGE = "page"
+        private const val QUERY_PARAM_PER_PAGE = "per_page"
     }
 }

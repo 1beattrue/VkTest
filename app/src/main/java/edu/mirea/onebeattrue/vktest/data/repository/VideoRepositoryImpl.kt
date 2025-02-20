@@ -23,25 +23,28 @@ class VideoRepositoryImpl @Inject constructor(
 
     override fun getVideos(): Flow<List<Video>> = dao.getVideos().map { it.toEntities() }
 
+
     override suspend fun getVideoById(id: Long): Video = withContext(Dispatchers.IO) {
         dao.getVideoById(id).toEntity()
     }
 
-    override suspend fun loadNext(page: Int) = fetchAndCacheVideos(page)
-
-    override suspend fun refresh() = withContext(Dispatchers.IO) {
-        db.withTransaction {
-            dao.clearAll()
-            fetchAndCacheVideos(FIRST_PAGE)
-        }
+    override suspend fun loadNext() = withContext(Dispatchers.IO) {
+        val lastPage = dao.getLastPage() ?: FIRST_PAGE
+        val nextPage = lastPage + 1
+        val videos = api.getVideos(nextPage, PAGE_COUNT).videos.toDbModels(nextPage)
+        dao.upsertAll(videos)
     }
 
-    private suspend fun fetchAndCacheVideos(page: Int) {
-        val videos = api.getVideos(page).videos.toDbModels(page)
-        dao.upsertAll(videos)
+    override suspend fun refresh() {
+        val videos = api.getVideos(FIRST_PAGE, PAGE_COUNT).videos.toDbModels(FIRST_PAGE)
+        db.withTransaction {
+            dao.clearAll()
+            dao.upsertAll(videos)
+        }
     }
 
     companion object {
         private const val FIRST_PAGE = 1
+        private const val PAGE_COUNT = 15
     }
 }

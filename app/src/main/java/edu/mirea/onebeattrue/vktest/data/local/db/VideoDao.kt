@@ -11,11 +11,17 @@ interface VideoDao {
     @Upsert
     suspend fun upsertAll(videos: List<VideoDbModel>)
 
-    @Query("SELECT * FROM video")
+    @Query("SELECT * FROM video ORDER BY page ASC, id ASC")
     fun getVideos(): Flow<List<VideoDbModel>>
 
     @Query("SELECT * FROM video WHERE id = :id LIMIT 1")
     suspend fun getVideoById(id: Long): VideoDbModel
+
+    @Query("SELECT page FROM video ORDER BY page DESC LIMIT 1")
+    suspend fun getLastPage(): Int?
+
+    @Query("SELECT COUNT(*) FROM video")
+    suspend fun getVideoCount(): Int
 
     @Query("DELETE FROM video")
     suspend fun clearAll()

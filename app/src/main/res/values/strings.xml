@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">VkTest</string>
+    <string name="retry">Загрузить еще</string>
 </resources>

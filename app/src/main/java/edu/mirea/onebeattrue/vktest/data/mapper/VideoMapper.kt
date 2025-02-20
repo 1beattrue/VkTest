@@ -7,6 +7,8 @@ import kotlin.collections.map
 
 fun VideoDto.toDbModel(page: Int): VideoDbModel = VideoDbModel(
     id = id,
+    width = width,
+    height = height,
     thumbnail = image,
     duration = duration,
     author = author.name,
@@ -19,6 +21,8 @@ fun List<VideoDto>.toDbModels(page: Int): List<VideoDbModel> = map { it.toDbMode
 
 fun VideoDbModel.toEntity(): Video = Video(
     id = id,
+    width = width,
+    height = height,
     thumbnail = thumbnail,
     duration = duration,
     author = author,
