@@ -130,13 +130,13 @@ fun MainContent(
 @Composable
 private fun VideoItem(
     video: Video,
-    onItemClicked: (Long) -> Unit,
+    onItemClicked: (Video) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RectangleShape,
-        onClick = { onItemClicked(video.id) },
+        onClick = { onItemClicked(video) },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         )

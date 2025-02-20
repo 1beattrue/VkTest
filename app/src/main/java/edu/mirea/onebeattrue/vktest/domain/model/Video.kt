@@ -1,8 +1,10 @@
 package edu.mirea.onebeattrue.vktest.domain.model
 
 import androidx.compose.runtime.Immutable
+import kotlinx.serialization.Serializable
 
 @Immutable
+@Serializable
 data class Video(
     val id: Long,
     val width: Int,
@@ -10,7 +12,7 @@ data class Video(
     val thumbnail: String,
     val duration: Int,
     val author: String,
-    val videoFile: String,
+    val videoUrl: String,
     val previewPicture: String,
-    val page: Int
+    val page: Int,
 )

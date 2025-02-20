@@ -16,6 +16,7 @@
         android:theme="@style/Theme.VkTest"
         tools:targetApi="31">
         <activity
+            android:configChanges="orientation|screenSize|layoutDirection"
             android:name=".presentation.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.VkTest">

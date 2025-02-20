@@ -22,7 +22,7 @@ import javax.inject.Inject
 interface MainStore : Store<Intent, State, Label> {
 
     sealed interface Intent {
-        data class ClickVideo(val videoId: Long) : Intent
+        data class ClickVideo(val video: Video) : Intent
         data object Refresh : Intent
         data object LoadNext : Intent
     }
@@ -42,7 +42,7 @@ interface MainStore : Store<Intent, State, Label> {
     }
 
     sealed interface Label {
-        data class OnVideoClicked(val videoId: Long) : Label
+        data class OnVideoClicked(val video: Video) : Label
         data class ShowError(val error: Throwable) : Label
     }
 }
@@ -103,7 +103,7 @@ class MainStoreFactory @Inject constructor(
 
         override fun executeIntent(intent: Intent) {
             when (intent) {
-                is Intent.ClickVideo -> publish(Label.OnVideoClicked(intent.videoId))
+                is Intent.ClickVideo -> publish(Label.OnVideoClicked(intent.video))
 
 
                 Intent.LoadNext -> {

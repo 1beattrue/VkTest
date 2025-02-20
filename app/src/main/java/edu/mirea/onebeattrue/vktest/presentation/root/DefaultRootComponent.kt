@@ -9,6 +9,7 @@ import com.arkivanov.decompose.value.Value
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import edu.mirea.onebeattrue.vktest.domain.model.Video
 import edu.mirea.onebeattrue.vktest.presentation.main.DefaultMainComponent
 import edu.mirea.onebeattrue.vktest.presentation.video.DefaultVideoComponent
 import kotlinx.serialization.Serializable
@@ -24,7 +25,7 @@ class DefaultRootComponent @AssistedInject constructor(
     override val stack: Value<ChildStack<*, RootComponent.Child>> = childStack(
         source = navigation,
         serializer = Config.serializer(),
-        initialConfiguration = Config.Main,
+        initialConfiguration = Config.MainConfig,
         handleBackButton = true,
         childFactory = ::child
     )
@@ -33,18 +34,18 @@ class DefaultRootComponent @AssistedInject constructor(
         config: Config,
         componentContext: ComponentContext,
     ): RootComponent.Child = when (config) {
-        is Config.Video -> {
+        is Config.VideoConfig -> {
             val component = videoComponentFactory.create(
-                videoId = config.videoId,
+                video = config.video,
                 componentContext = componentContext,
             )
             RootComponent.Child.Video(component)
         }
 
-        is Config.Main -> {
+        is Config.MainConfig -> {
             val component = mainComponentFactory.create(
-                onVideoClicked = { videoId ->
-                    navigation.pushNew(Config.Video(videoId))
+                onVideoClicked = { video ->
+                    navigation.pushNew(Config.VideoConfig(video))
                 },
                 componentContext = componentContext
             )
@@ -55,10 +56,10 @@ class DefaultRootComponent @AssistedInject constructor(
     @Serializable
     sealed interface Config {
         @Serializable
-        data object Main : Config
+        data object MainConfig : Config
 
         @Serializable
-        data class Video(val videoId: Long) : Config
+        data class VideoConfig(val video: Video) : Config
     }
 
     @AssistedFactory

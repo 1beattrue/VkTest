@@ -7,6 +7,7 @@ import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import edu.mirea.onebeattrue.vktest.domain.model.Video
 import edu.mirea.onebeattrue.vktest.presentation.main.MainStore.Intent
 import edu.mirea.onebeattrue.vktest.presentation.utils.scope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class DefaultMainComponent @AssistedInject constructor(
     private val storeFactory: MainStoreFactory,
-    @Assisted("onVideoClicked") onVideoClicked: (Long) -> Unit,
+    @Assisted("onVideoClicked") onVideoClicked: (Video) -> Unit,
     @Assisted("componentContext") componentContext: ComponentContext,
 ) : MainComponent, ComponentContext by componentContext {
 
@@ -27,7 +28,7 @@ class DefaultMainComponent @AssistedInject constructor(
             store.labels.collect { label ->
                 when (label) {
                     is MainStore.Label.OnVideoClicked -> {
-                        onVideoClicked(label.videoId)
+                        onVideoClicked(label.video)
                     }
 
                     else -> {}
@@ -43,8 +44,8 @@ class DefaultMainComponent @AssistedInject constructor(
     override val labels: Flow<MainStore.Label>
         get() = store.labels
 
-    override fun clickVideo(videoId: Long) {
-        store.accept(Intent.ClickVideo(videoId))
+    override fun clickVideo(video: Video) {
+        store.accept(Intent.ClickVideo(video))
     }
 
     override fun loadNext() {
@@ -59,7 +60,7 @@ class DefaultMainComponent @AssistedInject constructor(
     @AssistedFactory
     interface Factory {
         fun create(
-            @Assisted("onVideoClicked") onVideoClicked: (Long) -> Unit,
+            @Assisted("onVideoClicked") onVideoClicked: (Video) -> Unit,
             @Assisted("componentContext") componentContext: ComponentContext,
         ): DefaultMainComponent
     }

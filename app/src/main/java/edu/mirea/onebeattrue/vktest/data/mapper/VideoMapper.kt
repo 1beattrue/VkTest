@@ -12,7 +12,7 @@ fun VideoDto.toDbModel(page: Int): VideoDbModel = VideoDbModel(
     thumbnail = image,
     duration = duration,
     author = author.name,
-    videoFile = videoFiles.first().link,
+    videoUrl = videoFiles.first().link,
     previewPicture = videoPictures.first().picture,
     page = page
 )
@@ -26,7 +26,7 @@ fun VideoDbModel.toEntity(): Video = Video(
     thumbnail = thumbnail,
     duration = duration,
     author = author,
-    videoFile = videoFile,
+    videoUrl = videoUrl,
     previewPicture = previewPicture,
     page = page
 )

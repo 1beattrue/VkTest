@@ -12,7 +12,7 @@ data class VideoDbModel(
     val height: Int,
     val duration: Int,
     val author: String,
-    val videoFile: String,
+    val videoUrl: String,
     val previewPicture: String,
     val page: Int
 )
